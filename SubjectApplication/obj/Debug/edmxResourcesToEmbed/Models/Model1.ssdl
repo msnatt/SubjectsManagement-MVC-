@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SubjectApplicationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="FileSubject">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubjectID" Type="int" Nullable="false" />
+    <Property Name="NameFile" Type="nvarchar" MaxLength="250" />
+    <Property Name="PathFile" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubjectName" Type="nvarchar" MaxLength="50" />
+    <Property Name="SubjectCode" Type="int" />
+    <Property Name="SubjectLecturer" Type="nvarchar" MaxLength="50" />
+    <Property Name="StudyTimeStart" Type="datetime" />
+    <Property Name="StudyTimeEnd" Type="datetime" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="Isdeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Topic">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LevelTopic" Type="int" />
+    <Property Name="TopicName" Type="nvarchar" MaxLength="50" />
+    <Property Name="SubjectID" Type="int" />
+    <Property Name="TopicHeaderID" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_SubjectID_FileSubjectSubjectID">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="FileSubject" Type="Self.FileSubject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FileSubject">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubjectID_TopicSubjectID">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+    <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Topic">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TopicID_TopicHeaderID">
+    <End Role="Topic" Type="Self.Topic" Multiplicity="0..1" />
+    <End Role="Topic1" Type="Self.Topic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Topic">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Topic1">
+        <PropertyRef Name="TopicHeaderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SubjectApplicationModelStoreContainer">
+    <EntitySet Name="FileSubject" EntityType="Self.FileSubject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_SubjectID_FileSubjectSubjectID" Association="Self.FK_SubjectID_FileSubjectSubjectID">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="FileSubject" EntitySet="FileSubject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubjectID_TopicSubjectID" Association="Self.FK_SubjectID_TopicSubjectID">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="Topic" EntitySet="Topic" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TopicID_TopicHeaderID" Association="Self.FK_TopicID_TopicHeaderID">
+      <End Role="Topic" EntitySet="Topic" />
+      <End Role="Topic1" EntitySet="Topic" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

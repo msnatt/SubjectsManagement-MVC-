@@ -1,0 +1,26 @@
+﻿@model IEnumerable<SubjectApplication.Models.FileSubject>
+
+@{
+    ViewBag.Title = "IndexOfFile";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubjectID)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Ddddelete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,19 @@
+﻿@model SubjectApplication.Models.FileSubject
+@Html.HiddenFor(m => m.SubjectID)
+@Html.HiddenFor(m => m.IsDeleted)
+@Html.HiddenFor(m => m.PathFile)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.NameFile)
+@Html.HiddenFor(m => m.IsHidden)
+
+@if (!Model.IsDeleted)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.NameFile)
+        </td>
+        <td>
+            <input value="Delete" class="btn btn-block" style="width:15%;" onclick="FuncDeleteFileInTemp(@Html.IdFor(m => m.IsDeleted))" />
+        </td>
+    </tr>
+}

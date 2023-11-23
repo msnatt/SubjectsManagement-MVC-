@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SubjectApplicationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FileSubject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectID" Type="int" Nullable="false" />
+          <Property Name="NameFile" Type="nvarchar" MaxLength="250" />
+          <Property Name="PathFile" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubjectCode" Type="int" />
+          <Property Name="SubjectLecturer" Type="nvarchar" MaxLength="50" />
+          <Property Name="StudyTimeStart" Type="datetime" />
+          <Property Name="StudyTimeEnd" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Isdeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LevelTopic" Type="int" />
+          <Property Name="TopicName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubjectID" Type="int" />
+          <Property Name="TopicHeaderID" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SubjectID_FileSubjectSubjectID">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="FileSubject" Type="Self.FileSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FileSubject">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectID_TopicSubjectID">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+          <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopicID_TopicHeaderID">
+          <End Role="Topic" Type="Self.Topic" Multiplicity="0..1" />
+          <End Role="Topic1" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Topic1">
+              <PropertyRef Name="TopicHeaderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SubjectApplicationModelStoreContainer">
+          <EntitySet Name="FileSubject" EntityType="Self.FileSubject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SubjectID_FileSubjectSubjectID" Association="Self.FK_SubjectID_FileSubjectSubjectID">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="FileSubject" EntitySet="FileSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectID_TopicSubjectID" Association="Self.FK_SubjectID_TopicSubjectID">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Topic" EntitySet="Topic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopicID_TopicHeaderID" Association="Self.FK_TopicID_TopicHeaderID">
+            <End Role="Topic" EntitySet="Topic" />
+            <End Role="Topic1" EntitySet="Topic" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SubjectApplicationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SubjectApplicationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FileSubject" EntityType="SubjectApplicationModel.FileSubject" />
+          <EntitySet Name="Subject" EntityType="SubjectApplicationModel.Subject" />
+          <EntitySet Name="Topic" EntityType="SubjectApplicationModel.Topic" />
+          <AssociationSet Name="FK_SubjectID_FileSubjectSubjectID" Association="SubjectApplicationModel.FK_SubjectID_FileSubjectSubjectID">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="FileSubject" EntitySet="FileSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectID_TopicSubjectID" Association="SubjectApplicationModel.FK_SubjectID_TopicSubjectID">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Topic" EntitySet="Topic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopicID_TopicHeaderID" Association="SubjectApplicationModel.FK_TopicID_TopicHeaderID">
+            <End Role="Topic" EntitySet="Topic" />
+            <End Role="Topic1" EntitySet="Topic" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FileSubject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectID" Type="Int32" Nullable="false" />
+          <Property Name="NameFile" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PathFile" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Subject" Relationship="SubjectApplicationModel.FK_SubjectID_FileSubjectSubjectID" FromRole="FileSubject" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectCode" Type="Int32" />
+          <Property Name="SubjectLecturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StudyTimeStart" Type="DateTime" Precision="3" />
+          <Property Name="StudyTimeEnd" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Isdeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FileSubject" Relationship="SubjectApplicationModel.FK_SubjectID_FileSubjectSubjectID" FromRole="Subject" ToRole="FileSubject" />
+          <NavigationProperty Name="Topic" Relationship="SubjectApplicationModel.FK_SubjectID_TopicSubjectID" FromRole="Subject" ToRole="Topic" />
+        </EntityType>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LevelTopic" Type="Int32" />
+          <Property Name="TopicName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectID" Type="Int32" />
+          <Property Name="TopicHeaderID" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Subject" Relationship="SubjectApplicationModel.FK_SubjectID_TopicSubjectID" FromRole="Topic" ToRole="Subject" />
+          <NavigationProperty Name="Topic1" Relationship="SubjectApplicationModel.FK_TopicID_TopicHeaderID" FromRole="Topic" ToRole="Topic1" />
+          <NavigationProperty Name="Topic2" Relationship="SubjectApplicationModel.FK_TopicID_TopicHeaderID" FromRole="Topic1" ToRole="Topic" />
+        </EntityType>
+        <Association Name="FK_SubjectID_FileSubjectSubjectID">
+          <End Type="SubjectApplicationModel.Subject" Role="Subject" Multiplicity="1" />
+          <End Type="SubjectApplicationModel.FileSubject" Role="FileSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FileSubject">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectID_TopicSubjectID">
+          <End Type="SubjectApplicationModel.Subject" Role="Subject" Multiplicity="0..1" />
+          <End Type="SubjectApplicationModel.Topic" Role="Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopicID_TopicHeaderID">
+          <End Type="SubjectApplicationModel.Topic" Role="Topic" Multiplicity="0..1" />
+          <End Type="SubjectApplicationModel.Topic" Role="Topic1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Topic1">
+              <PropertyRef Name="TopicHeaderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SubjectApplicationModelStoreContainer" CdmEntityContainer="SubjectApplicationEntities">
+          <EntitySetMapping Name="FileSubject">
+            <EntityTypeMapping TypeName="SubjectApplicationModel.FileSubject">
+              <MappingFragment StoreEntitySet="FileSubject">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="PathFile" ColumnName="PathFile" />
+                <ScalarProperty Name="NameFile" ColumnName="NameFile" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subject">
+            <EntityTypeMapping TypeName="SubjectApplicationModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="Isdeleted" ColumnName="Isdeleted" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="StudyTimeEnd" ColumnName="StudyTimeEnd" />
+                <ScalarProperty Name="StudyTimeStart" ColumnName="StudyTimeStart" />
+                <ScalarProperty Name="SubjectLecturer" ColumnName="SubjectLecturer" />
+                <ScalarProperty Name="SubjectCode" ColumnName="SubjectCode" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Topic">
+            <EntityTypeMapping TypeName="SubjectApplicationModel.Topic">
+              <MappingFragment StoreEntitySet="Topic">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="TopicHeaderID" ColumnName="TopicHeaderID" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="TopicName" ColumnName="TopicName" />
+                <ScalarProperty Name="LevelTopic" ColumnName="LevelTopic" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

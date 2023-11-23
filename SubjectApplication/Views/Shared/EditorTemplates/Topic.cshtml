@@ -1,0 +1,36 @@
+﻿@model SubjectApplication.Models.Topic
+
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.IsDeleted)
+@Html.HiddenFor(m => m.TopicHeaderID)
+@Html.HiddenFor(m => m.SubjectID)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.LevelTopic)
+@Html.HiddenFor(m => m.IsHere, new { Value = false })
+
+
+@if (!Model.IsDeleted)
+{
+    <div class="row">
+        @for (var i = 0; i < Model.LevelTopic; i++)
+        {
+            <div class="col-xs-1" style="width:20px">
+                @Html.Label("   ")
+            </div>
+        }
+        <div class="form-group col-xs-4">
+            @Html.LabelFor(model => model.TopicName, htmlAttributes: new { @class = "col-form-label" })
+            @Html.EditorFor(model => model.TopicName, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group col-xs-3">
+            <input value="Add Topic" class="btn" style="width:35%;" onclick="AddSubTopic(@Html.IdFor(m => m.IsHere))" /> |
+            <input value="Delete" class="btn" style="width:25%;" onclick="DelTopic(@Html.IdFor(m => m.IsDeleted))" />
+
+        </div>
+
+    </div>
+
+    @Html.EditorFor(m => m.Topic1)
+}
